@@ -17,11 +17,11 @@ from starlette.responses import RedirectResponse, JSONResponse, HTMLResponse, Pl
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import OperationalError
 
-from utils import crud
-from utils import models
-from utils import schemas
+import crud
+import models
+import schemas
 
-from utils.database import SessionLocal, Base, engine
+from database import SessionLocal, Base, engine
 
 from typing import Optional
 
@@ -97,7 +97,7 @@ async def get_open_api_endpoint(api_key: APIKey = Depends(get_api_key)):
 
 @app.get("/users/{user_token}", response_model=schemas.User)
 def read_user(user_token: str, db: Session = Depends(get_db)):
-    db_user = utils.crud.get_user(db, user_token=user_token)
+    db_user = crud.get_user(db, user_token=user_token)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
