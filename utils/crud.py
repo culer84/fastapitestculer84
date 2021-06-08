@@ -6,7 +6,6 @@ from utils import models
 def get_user(db: Session, user_token: str):
     return db.query(models.User).filter(models.User.user_token == user_token).first()
 
-"""
 
 def get_user_by_name(db: Session, users_name: str):
     return db.query(models.User).filter(models.User.users_name == users_name).first()
@@ -23,5 +22,3 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
-
-"""
