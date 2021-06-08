@@ -109,9 +109,9 @@ async def create_sms(sms: schemas.SMS, request: Request, db: Session = Depends(g
     hm = hmac.new(bytes(user.hashed_password, 'UTF-8'), data, hashlib.sha256).hexdigest();
     if (hm == request.headers['x-app-access-sig']) and (user.is_active):
         db_SMS = models.SMS(id_sms=sms.id_sms, from_sms=sms.from_sms, to_sms=sms.to_sms, body_sms=sms.body_sms, id_user=user.id)
-        #db.add(db_SMS)
-        #db.commit()
-        #db.refresh(db_SMS)
+        db.add(db_SMS)
+        db.commit()
+        db.refresh(db_SMS)
         #return sms
         return sms
     raise HTTPException(status_code=401)
